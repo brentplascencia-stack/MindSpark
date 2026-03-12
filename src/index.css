@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0A192F;
+  --color-navy-light: #112240;
+  --color-cyan: #00F5FF;
+  --color-magenta: #FF00FF;
+  --color-purple: #9D00FF;
+  --color-orange: #FF8C00;
+  
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+@layer base {
+  body {
+    @apply bg-navy text-white font-sans selection:bg-cyan/30;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl;
+  }
+  
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-cyan via-purple to-orange;
+  }
+  
+  .btn-primary {
+    @apply px-8 py-4 rounded-full font-bold transition-all duration-300 bg-gradient-to-r from-cyan via-purple to-magenta hover:scale-105 hover:shadow-[0_0_20px_rgba(0,245,255,0.5)] active:scale-95 text-navy;
+  }
+
+  .spark-node {
+    @apply w-2 h-2 rounded-full bg-cyan shadow-[0_0_8px_#00F5FF];
+  }
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@500;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');

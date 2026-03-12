@@ -1,0 +1,34 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin' ||
+         request.auth.token.email == "brentp@futuremindspark.net" ||
+      request.auth.token.email == "brentplascencia@gmail.com");
+    }
+
+    match /portals/{portalId} {
+      // Admin can do everything
+      allow read, write: if isAdmin();
+      // Clients can read to verify access code
+      allow get: if true; 
+    }
+
+    match /uploads/{uploadId} {
+      // Admin can read all
+      allow read: if isAdmin();
+      // Clients can create if they have a valid portal
+      allow create: if true; // We will validate the portalId in the app, but for rules we allow create
+    }
+    
+    match /users/{userId} {
+      allow read, write: if request.auth.uid == userId || isAdmin();
+    }
+  }
+}

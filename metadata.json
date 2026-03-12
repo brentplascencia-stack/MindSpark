@@ -1,0 +1,7 @@
+{
+  "name": "MindSpark AI Website",
+  "description": "Ignite Your Brand with the Spark of Artificial Intelligence. Scaling social media presence and automating customer engagement with custom AI voice and chat agents.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "entities": {
+    "PortalSession": {
+      "title": "Portal Session",
+      "description": "A secure upload session for a specific client.",
+      "type": "object",
+      "properties": {
+        "accessCode": {
+          "type": "string",
+          "description": "The unique code required to access this portal."
+        },
+        "clientName": {
+          "type": "string",
+          "description": "The name of the client."
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When this link/code expires."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "completed", "expired"],
+          "description": "Current status of the portal."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["accessCode", "clientName", "expiresAt", "status"]
+    },
+    "ClientUpload": {
+      "title": "Client Upload",
+      "description": "Metadata for a set of photos uploaded by a client.",
+      "type": "object",
+      "properties": {
+        "portalId": {
+          "type": "string",
+          "description": "Reference to the PortalSession."
+        },
+        "clientName": {
+          "type": "string"
+        },
+        "specialInstructions": {
+          "type": "string",
+          "description": "Instructions like colors or outfit preferences."
+        },
+        "fileUrls": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "List of URLs for the uploaded photos."
+        },
+        "folderPath": {
+          "type": "string",
+          "description": "The path in storage where files are kept (Name/Date)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["portalId", "clientName", "fileUrls", "folderPath"]
+    }
+  },
+  "firestore": {
+    "portals": {
+      "schema": "PortalSession",
+      "description": "Collection of active and expired upload portals."
+    },
+    "uploads": {
+      "schema": "ClientUpload",
+      "description": "Collection of metadata for completed client uploads."
+    }
+  }
+}
